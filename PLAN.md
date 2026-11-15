@@ -83,6 +83,27 @@ netral, sudah ada di perangkat, angka tabel rata dengan baik).
 
 Skala huruf memakai `clamp()`, satu skala jarak 4/8/12/16/24/32/48/64/96 px.
 
+Keputusan modernisasi 16 November 2026 (satu alasan per keputusan):
+
+- `text-wrap: balance` pada `h1`/`h2`/`h3`: tidak ada kata yatim di baris
+  terakhir judul serif.
+- Tracking `h1` diperketat ke `-0.02em` dan batas atas naik ke `3.75rem`:
+  kehadiran judul lebih tegas lewat ukuran huruf, bukan warna (ENERGY 2).
+- `scroll-margin-top: 80px` pada bagian ber-id: header sticky setinggi 64 px
+  tidak lagi menutupi target `#quickstart` dan `#repos`.
+- `::selection` oranye di atas navy: sorotan teks ikut identitas merek dan
+  tetap lolos 5,74:1.
+- Radius tombol dan skip-link disatukan ke `var(--radius)`: satu token radius,
+  bukan angka 8 px yang meniru radius lain.
+- Transisi 120 ms pada warna tautan, tombol, dan baris tabel: sesuai dial
+  MOTION 1, hanya `:hover` yang bergerak.
+- Latar baris tabel saat hover memakai `--surface`: mata melacak kolom pada
+  tabel tiga kolom yang lebar.
+- `code` inline diberi isian `--surface` dan garis `--line`: token kode
+  terbaca sebagai objek terpisah tanpa ikon atau lencana.
+- `min-width: 44px` pada `.brand`: saat wordmark disembunyikan di layar kecil,
+  logo 43,69 px tetap punya area tap 44 px.
+
 ## 6. Struktur halaman dan naskah
 
 Naskah ditulis bahasa Inggris karena semua dokumen publik berbahasa Inggris.

@@ -73,7 +73,7 @@ Checked 2026-11-15 on the built image and on the deployed site:
 | Missing path | 404 with the custom page |
 | `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`, `Content-Security-Policy` | present |
 | `/assets/logo-lockup.png` | 200, `Cache-Control: public, max-age=31536000, immutable` |
-| `/styles.css?v=3` | 200, `Cache-Control: public, max-age=14400, must-revalidate` at the edge (origin sends 300) |
+| `/styles.css?v=4` | 200, `Cache-Control: public, max-age=14400, must-revalidate` at the edge (origin sends 300) |
 | Rendered text contrast | every visible text node passes AA at 1440 px and 375 px |
 | Tap targets | brand 44 px, footer links 44 px, buttons and rows at least 44 px |
 | Layout at 320, 375, 768, 1024, 1440 px | no horizontal overflow (`scrollWidth` equals `innerWidth`) |

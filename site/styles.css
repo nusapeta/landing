@@ -43,6 +43,19 @@ a {
   color: var(--teal-deep);
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
+  transition: color 120ms ease, background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+::selection {
+  background: var(--orange);
+  color: var(--navy);
+}
+
+section[id],
+footer[id],
+main[id] {
+  scroll-margin-top: 80px;
 }
 
 a:hover {
@@ -63,10 +76,12 @@ h3 {
   letter-spacing: -0.01em;
   line-height: 1.15;
   margin: 0;
+  text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(2rem, 1.2rem + 3.4vw, 3.4rem);
+  font-size: clamp(2rem, 1.2rem + 3.4vw, 3.75rem);
+  letter-spacing: -0.02em;
 }
 
 h2 {
@@ -85,6 +100,13 @@ code,
 pre {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   font-size: 0.925em;
+}
+
+:not(pre) > code {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
 }
 
 .wrap {
@@ -115,7 +137,7 @@ pre {
   background: var(--navy);
   color: var(--white);
   text-decoration: none;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .skip-link:focus {
@@ -142,6 +164,7 @@ pre {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+  min-width: 44px;
   gap: 10px;
   color: var(--navy);
   text-decoration: none;
@@ -216,7 +239,7 @@ pre {
   justify-content: center;
   min-height: 48px;
   padding: 0 22px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--orange);
   color: var(--navy);
   font-weight: 600;
@@ -298,6 +321,14 @@ tbody th {
 
 tbody td {
   font-variant-numeric: tabular-nums;
+}
+
+tbody tr {
+  transition: background-color 120ms ease;
+}
+
+tbody tr:hover {
+  background: var(--surface);
 }
 
 tbody tr:last-child th,
@@ -432,13 +463,15 @@ td code {
 .copy {
   min-height: 44px;
   padding: 0 18px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: 1px solid var(--navy);
   background: var(--white);
   color: var(--navy);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease,
+    border-color 120ms ease;
 }
 
 .copy:hover {
