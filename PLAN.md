@@ -163,11 +163,11 @@ Tidak ada bagian testimoni, logo pelanggan, pricing, FAQ template, atau
 
 ## 10. Definition of done
 
-- [ ] `https://nusapeta.web.id` menjawab 200 dengan halaman final.
-- [ ] Demo tertaut dan benar-benar menjawab (`/route`, `/place/search`).
-- [ ] Repo `nusapeta/landing` publik, CI hijau, image GHCR terbit.
-- [ ] Verifikasi §9 dijalankan dan hasilnya dicatat di README.
-- [ ] Tidak ada angka, testimoni, atau logo karangan.
+- [x] `https://nusapeta.web.id` menjawab 200 dengan halaman final.
+- [x] Demo tertaut dan benar-benar menjawab (`/route`, `/place/search`).
+- [x] Repo `nusapeta/landing` publik, CI hijau, image GHCR terbit.
+- [x] Verifikasi §9 dijalankan dan hasilnya dicatat di README.
+- [x] Tidak ada angka, testimoni, atau logo karangan.
 
 ## 11. Risiko dan mitigasi
 

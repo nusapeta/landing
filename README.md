@@ -63,7 +63,7 @@ missing path is 404, and the security and cache headers are present.
 
 ## Verification
 
-Checked 2026-11-15 on the built image:
+Checked 2026-11-15 on the built image and on the deployed site:
 
 | Check | Result |
 |---|---|
@@ -75,6 +75,10 @@ Checked 2026-11-15 on the built image:
 | Layout at 320, 375, 768, 1024, 1440 px | no horizontal overflow (`scrollWidth` equals `innerWidth`) |
 | Copy button, success path | status reads `Commands copied to the clipboard.` |
 | Copy button, denied clipboard | status reads `Copy failed. Select the commands above and copy them manually.` |
+| Live site after deploy | `https://nusapeta.web.id/` returns 200 through the Cloudflare Tunnel |
+| Live `/healthz` | body `ok` |
+| Live missing path | 404 with the custom page |
+| Container placement | `nusapeta-lp` on `1panel-network`, no published ports |
 
 ## License
 
