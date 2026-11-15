@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nusapeta: routing and geocoding for Indonesia, self-hosted</title>
+<meta name="description" content="A memory-mapped router and a single-file geocoder built from OpenStreetMap data for Indonesia. Two engines, one compose file, no database.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nusapeta: routing and geocoding for Indonesia, self-hosted">
+<meta property="og:description" content="Two engines, one compose file, no database. Measured numbers and open limits.">
+<meta property="og:url" content="https://nusapeta.web.id/">
+<meta property="og:image" content="https://nusapeta.web.id/assets/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon-64.png" sizes="64x64" type="image/png">
+<link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="/" aria-label="Nusapeta home">
+      <img src="/assets/logo-mark.png" alt="" width="512" height="375" fetchpriority="high">
+      <span class="brand-name">Nusapeta</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="https://demo.nusapeta.web.id/">Demo</a></li>
+        <li><a href="#quickstart">Quickstart</a></li>
+        <li><a href="#repos">Repositories</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title">Routing and geocoding for Indonesia, on your own machine.</h1>
+        <p class="lede">
+          A memory-mapped router and a single-file geocoder, both built from
+          OpenStreetMap data for the archipelago. Two engines, one compose file,
+          no database, no external service.
+        </p>
+        <p class="actions">
+          <a class="button" href="https://demo.nusapeta.web.id/">Open the live demo</a>
+          <a class="button button-quiet" href="#quickstart">See what it takes to run</a>
+        </p>
+      </div>
+      <div class="hero-mark">
+        <img src="/assets/logo-mark.png" alt="" width="512" height="375" fetchpriority="high">
+      </div>
+    </div>
+  </section>
+
+  <section class="measure" aria-labelledby="measure-title">
+    <div class="wrap">
+      <h2 id="measure-title">Measured on this deployment</h2>
+      <p class="section-note">Numbers below come from the running stack and the
+        repository files, not from estimates. Date of measurement: 15 November 2026.</p>
+      <div class="table-scroll">
+        <table>
+          <caption class="sr-only">Measured values for the Nusapeta stack</caption>
+          <thead>
+            <tr><th scope="col">What</th><th scope="col">Value</th><th scope="col">Where it comes from</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Graph size</th><td>54,891,393 nodes, 112,340,071 edges</td><td><code>/healthz</code> on the demo</td></tr>
+            <tr><th scope="row">Idle memory, whole stack</th><td>47 MiB across four processes</td><td><code>nusapeta/stack</code> README</td></tr>
+            <tr><th scope="row">Images</th><td>36.8 MB router, 147.5 MB geocoder</td><td><code>docker images</code></td></tr>
+            <tr><th scope="row">End-to-end checks</th><td>9 of 9 passing</td><td><code>scripts/e2e.sh</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="engines" aria-labelledby="engines-title">
+    <div class="wrap">
+      <h2 id="engines-title">Two engines, one compose file</h2>
+      <div class="engine-grid">
+        <article class="engine engine-route">
+          <h3>Route</h3>
+          <p>
+            The national graph is read with <code>mmap</code>, so two profiles share
+            the same pages and each router process idles near 17 MB. The on-disk
+            format is <code>.graph</code> v5; the binary is <code>nusa-serve</code>,
+            written in Go.
+          </p>
+          <p class="engine-link"><a href="https://github.com/nusapeta/route">nusapeta/route</a></p>
+        </article>
+        <article class="engine engine-place">
+          <h3>Place</h3>
+          <p>
+            One <code>.idx</code> file holds the whole geocoder index at format v1,
+            built from the national PBF in 228 s. The binary is
+            <code>nusa-place</code>, written in Rust.
+          </p>
+          <p class="engine-link"><a href="https://github.com/nusapeta/place">nusapeta/place</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="try" aria-labelledby="try-title">
+    <div class="wrap">
+      <h2 id="try-title">Try it without an account</h2>
+      <p class="section-note">The demo runs the same compose file published here,
+        behind a rate limit of 15 requests per minute per IP.</p>
+      <ul class="request-list">
+        <li>
+          <span class="request-label">Search</span>
+          <div class="request-body">
+            <code class="request-url">/place/search?q=monumen%20nasional</code>
+            <span class="request-result">Returns Monumen Nasional, Gambir, Jakarta Pusat.</span>
+          </div>
+          <a href="https://demo.nusapeta.web.id/place/search?q=monumen%20nasional">Open request</a>
+        </li>
+        <li>
+          <span class="request-label">Reverse</span>
+          <div class="request-body">
+            <code class="request-url">/place/reverse?lat=-6.1754&amp;lon=106.8272</code>
+            <span class="request-result">Returns Jakarta, Gambir, Jakarta Pusat.</span>
+          </div>
+          <a href="https://demo.nusapeta.web.id/place/reverse?lat=-6.1754&amp;lon=106.8272">Open request</a>
+        </li>
+        <li>
+          <span class="request-label">Route</span>
+          <div class="request-body">
+            <code class="request-url">/route?from=-6.1754,106.8272&amp;to=-6.2444,106.8006</code>
+            <span class="request-result">Returns 10,724 m and 680.9 s for the car profile.</span>
+          </div>
+          <a href="https://demo.nusapeta.web.id/route?from=-6.1754,106.8272&amp;to=-6.2444,106.8006">Open request</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="quickstart" id="quickstart" aria-labelledby="quickstart-title">
+    <div class="wrap quickstart-grid">
+      <div>
+        <h2 id="quickstart-title">Run it yourself</h2>
+        <p>
+          The compose bundle is <a href="https://github.com/nusapeta/stack">nusapeta/stack</a>.
+          The bootstrap script downloads the published data release and checks its
+          SHA256 before anything starts. The compressed national graph is about 552 MB.
+        </p>
+      </div>
+      <div class="code-block">
+        <pre id="quickstart-code"><code>cp .env.example .env
+scripts/bootstrap.sh
+docker compose up -d --wait
+scripts/e2e.sh</code></pre>
+        <button type="button" class="copy" data-copy="quickstart-code">Copy commands</button>
+        <p class="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="limits" aria-labelledby="limits-title">
+    <div class="wrap">
+      <h2 id="limits-title">What this does not claim</h2>
+      <ol class="limit-list">
+        <li>
+          <strong>Route accuracy has not passed our internal gate.</strong>
+          The E1 gate failed: median difference against the reference is 0.23 %,
+          the 95th percentile is 14.49 %. The gate stays open and these numbers
+          stay published.
+        </li>
+        <li>
+          <strong><code>place_id</code> is not a Google Place ID.</strong>
+          It identifies an OpenStreetMap feature in this index and means nothing
+          outside it.
+        </li>
+        <li>
+          <strong>Coverage is Indonesia.</strong> Routes above 100 km return
+          <code>422 too_far</code>.
+        </li>
+        <li>
+          <strong>Version 0.1.0.</strong> The data formats are versioned
+          (<code>.graph</code> v5, <code>.idx</code> v1); the HTTP API can change
+          before 1.0.
+        </li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="repos">
+  <div class="wrap footer-grid">
+    <div>
+      <h2 class="footer-title">Repositories</h2>
+      <ul class="footer-links">
+        <li><a href="https://github.com/nusapeta/route">nusapeta/route</a></li>
+        <li><a href="https://github.com/nusapeta/place">nusapeta/place</a></li>
+        <li><a href="https://github.com/nusapeta/stack">nusapeta/stack</a></li>
+        <li><a href="https://demo.nusapeta.web.id/">Live demo</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer-title">Paperwork</h2>
+      <ul class="footer-links">
+        <li>Code: MIT license</li>
+        <li>Data: ODbL 1.0, <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></li>
+        <li><a href="https://github.com/nusapeta/stack/blob/main/SECURITY.md">Security policy</a></li>
+      </ul>
+    </div>
+    <p class="footer-note">
+      Research preview. Nothing here is a commercial service, and the demo can
+      stop without notice.
+    </p>
+  </div>
+</footer>
+
+<script src="/app.js" defer></script>
+</body>
+</html>

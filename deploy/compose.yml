@@ -1,0 +1,31 @@
+services:
+  landing:
+    image: ghcr.io/nusapeta/landing:0.1.0
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: nusapeta-lp
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+    expose:
+      - "8080"
+    networks:
+      - edge
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+networks:
+  edge:
+    external: true
+    name: 1panel-network
