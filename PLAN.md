@@ -65,16 +65,16 @@ Palet diambil dari logo, jadi bukan palet default:
 | Token | Nilai | Dipakai untuk | Rasio kontras |
 |---|---|---|---|
 | `--navy` | `#1B3A5C` | teks utama, latar tombol sekunder | 11,63:1 di atas putih |
-| `--teal` | `#1B7FA8` | tautan, garis aksen, label kecil | 4,52:1 di atas putih |
-| `--teal-deep` | `#0F5B7A` | tautan saat hover | 7,51:1 di atas putih |
+| `--teal` | `#1B7FA8` | garis aksen, label kecil, penanda nomor | 4,52:1 di atas putih |
+| `--teal-deep` | `#0F5B7A` | semua tautan teks | 7,51:1 di atas putih; 6,91:1 di atas surface |
 | `--orange` | `#F5A623` | satu aksen: tombol demo dan penanda angka | navy di atasnya 5,74:1 |
 | `--muted` | `#5A6B7B` | teks sekunder | 5,49:1 di atas putih |
 | `--surface` | `#F2F6F9` | latar bagian yang perlu dipisah | navy di atasnya 10,7:1 |
 
 Aturan pemakaian: oranye tidak pernah jadi warna teks (tidak lolos 4,5:1 di
-atas putih), hanya isian dan garis. Teal dipakai untuk tautan dan label, tidak
-untuk blok besar. Tidak ada gradien, tidak ada glow, tidak ada bayangan selain
-satu tingkat pada tombol utama.
+atas putih), hanya isian dan garis. Tautan memakai teal-deep supaya tetap lolos
+AA di atas surface yang berwarna, dan menggelap ke navy saat hover. Teal hanya
+dipakai untuk garis dan label. Tidak ada gradien, glow, atau bayangan.
 
 Tipografi tanpa unduhan jaringan: judul memakai `ui-serif, Georgia, serif`
 (alasan: memberi nada atlas dan editorial, cocok dengan subjek peta, dan tidak
@@ -87,12 +87,12 @@ Skala huruf memakai `clamp()`, satu skala jarak 4/8/12/16/24/32/48/64/96 px.
 
 Naskah ditulis bahasa Inggris karena semua dokumen publik berbahasa Inggris.
 
-1. **Header** (sticky tipis, tinggi 64 px): lockup logo, `nusapeta`, tautan
-   `Demo`, `Quickstart`, `Repos`. Semua tautan punya tujuan nyata.
+1. **Header** (sticky tipis, tinggi 64 px): mark logo, `Nusapeta`, tautan
+   `Demo`, `Quickstart`, `Repositories`. Semua tautan punya tujuan nyata.
 2. **Hero**: H1 "Routing and geocoding for Indonesia, on your own machine."
    Subjudul menyebut dua artefak konkret (binary router, satu file index) dan
    angka terukur. Dua aksi: `Open the live demo` (ke demo) dan
-   `Read the compose file` (ke repo stack).
+   `See what it takes to run` (ke bagian quickstart).
 3. **Tabel bukti** (`Measured on this stack`, 2026-11-15): simpul graph
    54.891.393, sisi 112.340.071, RAM diam router sekitar 17 MB, RAM diam
    geocoder sekitar 6 MB, image 36,8 MB dan 147,5 MB, e2e 9/9. Setiap angka
@@ -101,7 +101,7 @@ Naskah ditulis bahasa Inggris karena semua dokumen publik berbahasa Inggris.
    (router mmap, format `.graph` v5, `nusa-serve`), Place memakai kolom sempit
    (satu `.idx`, format v1, `nusa-place`). Masing-masing menaut ke repo.
 5. **Coba tanpa akun**: tiga contoh permintaan nyata yang bisa diklik:
-   pencarian `monas`, reverse geocode Monas, dan rute Monas ke Blok M
+   pencarian `monumen nasional`, reverse geocode Monas, dan rute Monas ke Blok M
    (10.724 m, 680,9 s). URL memakai `demo.nusapeta.web.id`.
 6. **Quickstart**: blok kode `docker compose` yang disalin dari
    `nusapeta/stack`, dengan tombol salin. Bukan jendela terminal hiasan.
@@ -122,8 +122,9 @@ Tidak ada bagian testimoni, logo pelanggan, pricing, FAQ template, atau
 - Server: `nginxinc/nginx-unprivileged:1.29-alpine`, uid 101, port 8080.
   Konfigurasi `deploy/nginx.conf` menetapkan `server_tokens off`, header
   keamanan (`X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`,
-  `Permissions-Policy`), cache panjang untuk aset berversi, cache 300 s untuk
-  HTML, dan 404 kustom.
+  `Permissions-Policy`), cache satu tahun untuk aset gambar, cache 300 s untuk
+  HTML, CSS, dan JS (tautan CSS/JS memakai query versi agar perubahan tidak
+  tertahan cache lama), dan 404 kustom.
 - Image: `ghcr.io/nusapeta/landing:0.1.0` (multi-arch amd64+arm64) dibangun CI
   dari `Dockerfile`; homelab membangun image lokal dari sumber yang sama.
 - Deploy: `deploy/compose.yml` dengan `container_name: nusapeta-lp`, jaringan

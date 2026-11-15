@@ -40,13 +40,13 @@ img {
 }
 
 a {
-  color: var(--teal);
+  color: var(--teal-deep);
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 
 a:hover {
-  color: var(--teal-deep);
+  color: var(--navy);
 }
 
 :focus-visible {

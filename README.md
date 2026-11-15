@@ -52,9 +52,10 @@ missing path is 404, and the security and cache headers are present.
 
 - Palette comes from the logo: navy `#1B3A5C`, teal `#1B7FA8`, deep teal
   `#0F5B7A`, orange `#F5A623`, muted `#5A6B7B`, surface `#F2F6F9`.
-- Contrast, measured with a WCAG checker: navy on white 11.63:1, teal on white
-  4.52:1, deep teal on white 7.51:1, navy on orange 5.74:1, muted on white
-  5.49:1, footer note on navy 6.19:1. Orange is never used as text color.
+- Contrast, measured with a WCAG checker: navy on white 11.63:1, deep teal on
+  white 7.51:1, deep teal on surface 6.91:1, navy on orange 5.74:1, muted on
+  white 5.49:1, muted on surface 5.05:1, footer note on navy 6.19:1. Links use
+  deep teal for that reason; orange is never used as text color.
 - Headings use `ui-serif` (Georgia where available), body text uses the system
   sans stack. No webfonts, so no font request and no layout shift.
 - Light theme only, because the supplied logo has a white background and its
@@ -72,6 +73,9 @@ Checked 2026-11-15 on the built image and on the deployed site:
 | Missing path | 404 with the custom page |
 | `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`, `Content-Security-Policy` | present |
 | `/assets/logo-lockup.png` | 200, `Cache-Control: public, max-age=31536000, immutable` |
+| `/styles.css?v=3` | 200, `Cache-Control: public, max-age=14400, must-revalidate` at the edge (origin sends 300) |
+| Rendered text contrast | every visible text node passes AA at 1440 px and 375 px |
+| Tap targets | brand 44 px, footer links 44 px, buttons and rows at least 44 px |
 | Layout at 320, 375, 768, 1024, 1440 px | no horizontal overflow (`scrollWidth` equals `innerWidth`) |
 | Copy button, success path | status reads `Commands copied to the clipboard.` |
 | Copy button, denied clipboard | status reads `Copy failed. Select the commands above and copy them manually.` |
