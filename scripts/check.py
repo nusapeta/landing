@@ -64,7 +64,7 @@ def check_page(name: str) -> None:
             continue
         if ref.startswith(("http://", "https://", "mailto:")):
             continue
-        target = SITE / ref.lstrip("/")
+        target = SITE / ref.split("?", 1)[0].lstrip("/")
         if not target.exists():
             errors.append(f"{name}: local reference {ref} does not exist")
 
