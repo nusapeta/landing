@@ -177,8 +177,6 @@ pre {
 .brand img {
   width: auto;
   height: 30px;
-  image-rendering: pixelated;
-  filter: contrast(1.35) saturate(1.2);
 }
 
 .brand-name {
