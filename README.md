@@ -58,8 +58,16 @@ missing path is 404, and the security and cache headers are present.
   deep teal for that reason; orange is never used as text color.
 - Headings use `ui-serif` (Georgia where available), body text uses the system
   sans stack. No webfonts, so no font request and no layout shift.
-- Light theme only, because the supplied logo has a white background and its
-  white pin half would disappear on a dark surface.
+- Light theme only, on purpose: the demo's only tile source is light, so a dark
+  surface would need a second tile set or an inverted filter. The logo's white
+  pin half is an additional reason to keep light surfaces.
+- The hero shows four car routes measured from the live demo on 2026-11-16
+  (Monas to Kota Tua, Jatinegara, Kemang, Grogol), simplified with
+  Douglas-Peucker at 0.00045 degrees and inlined as SVG. Inline, not `<img>`,
+  because only an inline element can be animated by the stylesheet.
+- Those routes are drawn once on load, 900 ms with a 80/200/320/440 ms stagger,
+  inside `@media (prefers-reduced-motion: no-preference)`. No loops, no scroll
+  effects.
 - The page works without JavaScript; the script only adds the copy button.
 
 ## Verification
@@ -73,7 +81,7 @@ Checked 2026-11-15 on the built image and on the deployed site:
 | Missing path | 404 with the custom page |
 | `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`, `Content-Security-Policy` | present |
 | `/assets/logo-lockup.png` | 200, `Cache-Control: public, max-age=31536000, immutable` |
-| `/styles.css?v=4` | 200, `Cache-Control: public, max-age=14400, must-revalidate` at the edge (origin sends 300) |
+| `/styles.css?v=5` | 200, `Cache-Control: public, max-age=14400, must-revalidate` at the edge (origin sends 300) |
 | Rendered text contrast | every visible text node passes AA at 1440 px and 375 px |
 | Tap targets | brand 44 px, footer links 44 px, buttons and rows at least 44 px |
 | Layout at 320, 375, 768, 1024, 1440 px | no horizontal overflow (`scrollWidth` equals `innerWidth`) |
@@ -83,6 +91,19 @@ Checked 2026-11-15 on the built image and on the deployed site:
 | Live `/healthz` | body `ok` |
 | Live missing path | 404 with the custom page |
 | Container placement | `nusapeta-lp` on `1panel-network`, no published ports |
+
+Checked again 2026-11-16 after the map revamp, on the deployed site:
+
+| Check | Result |
+|---|---|
+| Hero geometry | 4 `path.hero-route`, rendered lengths 287/510/669/285 px, stroke `#f5a623` |
+| Route motion | `animation-name: hero-route-draw`, `0.9s`, stagger 80/200/320/440 ms, `stroke-dashoffset` back to 0 after 1.4 s |
+| Text contrast, whole page | 95 text nodes, 0 below AA; lowest 5.05:1 (muted on surface) |
+| Layout at 320, 375, 768, 1024, 1440 px | no horizontal overflow; hero map 288/343/380/394/435 px wide |
+| Hero fold | section ends at 843 px at 1440x900, so the map card is visible without scrolling |
+| Tab order | 16 stops, every stop has `outline: solid 2px rgb(27, 58, 92)` |
+| Footer headings | one `h2` ("Repositories and paperwork") plus two `h3` labels |
+| Demo counterpart | route core carries `pathLength="1"` and `route-core-draw`; pins read 1 and 2; tile filter `saturate(0.55) contrast(1.04) brightness(1.02)` |
 
 ## License
 
