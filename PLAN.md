@@ -44,7 +44,7 @@ tidak butuh cerita merek.
 
 > Reading this as: project landing page for developers evaluating a self-hosted
 > OSM stack, in a cartographic brand language taken from the supplied logo
-> (teal, orange, navy on white), dial ENERGY 2 / RHYTHM 3 / MOTION 2.
+> (pin, ring, signal arc), dial ENERGY 2 / RHYTHM 3 / MOTION 2.
 
 - **ENERGY 2**: tegas lewat ukuran huruf dan angka, bukan lewat warna ramai.
 - **RHYTHM 3**: komposisi antar-bagian wajib terlihat beda: hero dua kolom
@@ -63,49 +63,57 @@ cincin teal, kepulauan bergaya faset, busur sinyal oranye, wordmark NUSAPETA
 navy. Situs memakai aset turunan yang dipangkas dari file itu, bukan lambang
 karangan baru.
 
-Palet diambil dari logo, jadi bukan palet default:
+Palet tidak diambil dari logo. Gaya **C. 8-bit cartography** dipilih pemilik
+merek pada 16 November 2026 dari tiga arah yang dipratinjau; logo tetap dipakai
+apa adanya sebagai aset wordmark, tetapi situs berjalan di atas palet pixel
+sendiri:
 
 | Token | Nilai | Dipakai untuk | Rasio kontras |
 |---|---|---|---|
-| `--navy` | `#1B3A5C` | teks utama, latar tombol sekunder | 11,63:1 di atas putih |
-| `--teal` | `#1B7FA8` | garis aksen, label kecil, penanda nomor | 4,52:1 di atas putih |
-| `--teal-deep` | `#0F5B7A` | semua tautan teks | 7,51:1 di atas putih; 6,91:1 di atas surface |
-| `--orange` | `#F5A623` | satu aksen: tombol demo dan penanda angka | navy di atasnya 5,74:1 |
-| `--muted` | `#5A6B7B` | teks sekunder | 5,49:1 di atas putih |
-| `--surface` | `#F2F6F9` | latar bagian yang perlu dipisah | navy di atasnya 10,7:1 |
+| `--ink` | `#14120E` | teks utama, garis, latar bagian gelap | 16,98:1 di atas cream |
+| `--cream` | `#F9F4E2` | latar halaman, teks di atas tinta | 16,98:1 dengan ink |
+| `--paper` | `#FFFDF3` | latar kartu, tabel, bidang terang | ink di atasnya 17,5:1 |
+| `--red` | `#C9331D` | satu aksen: tombol utama, penanda angka, garis rute | putih di atasnya 5,28:1 |
+| `--blue` | `#2450C8` | semua tautan teks, cincin fokus | 6,24:1 di atas cream |
+| `--sun` | `#FFCC33` | sorotan hover, seleksi, latar tombol sekunder | ink di atasnya 12,41:1 |
 
-Aturan pemakaian: oranye tidak pernah jadi warna teks (tidak lolos 4,5:1 di
-atas putih), hanya isian dan garis. Tautan memakai teal-deep supaya tetap lolos
-AA di atas surface yang berwarna, dan menggelap ke navy saat hover. Teal hanya
-dipakai untuk garis dan label. Tidak ada gradien, glow, atau bayangan.
+Aturan pemakaian: merah hanya untuk isian dan garis; teks di atasnya selalu
+putih (5,28:1). Hover merah memakai `#B02E19` (6,46:1) dan `:active`
+`#9C2815` (7,7:1). Teks sekunder memakai `#33302A` (11,94:1 di atas cream) dan
+`#D9D2BD` di atas tinta (12,39:1). Tidak ada gradien, blur, atau bayangan
+lembut: semua bayangan adalah blok offset tanpa blur.
 
-Tipografi tanpa unduhan jaringan: judul memakai `ui-serif, Georgia, serif`
-(alasan: memberi nada atlas dan editorial, cocok dengan subjek peta, dan tidak
-menambah request), badan memakai `ui-sans-serif, system-ui, sans-serif` (alasan:
-netral, sudah ada di perangkat, angka tabel rata dengan baik).
+Tipografi tanpa unduhan jaringan: seluruh halaman memakai satu tumpukan
+monospace sistem, yaitu `ui-monospace, SFMono-Regular, Menlo, Consolas,
+"Liberation Mono", monospace`. Alasan: grid huruf monospace membuat angka tabel
+rata sendiri dan menahan nada 8-bit tanpa memuat font apa pun.
 
 Skala huruf memakai `clamp()`, satu skala jarak 4/8/12/16/24/32/48/64/96 px.
 
 Keputusan modernisasi 16 November 2026 (satu alasan per keputusan):
 
 - `text-wrap: balance` pada `h1`/`h2`/`h3`: tidak ada kata yatim di baris
-  terakhir judul serif.
-- Tracking `h1` diperketat ke `-0.02em` dan batas atas naik ke `3.75rem`:
-  kehadiran judul lebih tegas lewat ukuran huruf, bukan warna (ENERGY 2).
-- `scroll-margin-top: 80px` pada bagian ber-id: header sticky setinggi 64 px
+  terakhir judul.
+- `h2::before { content: "> " }` berwarna merah: penanda bagian terbaca
+  sebagai prompt terminal, bukan nomor dekoratif.
+- `scroll-margin-top: 80px` pada bagian ber-id: header sticky setinggi 68 px
   tidak lagi menutupi target `#quickstart` dan `#repos`.
-- `::selection` oranye di atas navy: sorotan teks ikut identitas merek dan
-  tetap lolos 5,74:1.
-- Radius tombol dan skip-link disatukan ke `var(--radius)`: satu token radius,
-  bukan angka 8 px yang meniru radius lain.
-- Transisi 120 ms pada warna tautan, tombol, dan baris tabel: sesuai dial
-  MOTION 1, hanya `:hover` yang bergerak.
-- Latar baris tabel saat hover memakai `--surface`: mata melacak kolom pada
-  tabel tiga kolom yang lebar.
-- `code` inline diberi isian `--surface` dan garis `--line`: token kode
-  terbaca sebagai objek terpisah tanpa ikon atau lencana.
+- `::selection` kuning di atas tinta: sorotan teks ikut palet dan tetap lolos
+  12,41:1.
+- Semua radius nol dan semua bayangan blok offset: satu sistem bentuk, tidak
+  ada token `--radius` yang perlu dirawat.
+- Garis tabel 2 px dan garis bagian 4 px: kedalaman dibaca dari ketebalan garis,
+  bukan dari bayangan lembut.
+- Transisi 80 ms `steps(2)` hanya pada tombol, 120 ms pada warna tautan dan
+  baris tabel: gerak diskret, cocok dengan dial MOTION 2 dan tidak ada animasi
+  hover pada elemen lain.
+- Latar baris tabel saat hover memakai `--sun`: mata melacak kolom pada tabel
+  tiga kolom yang lebar.
+- `code` inline diberi isian cream dan garis tinta 2 px: token kode terbaca
+  sebagai objek terpisah tanpa ikon atau lencana.
 - `min-width: 44px` pada `.brand`: saat wordmark disembunyikan di layar kecil,
-  logo 43,69 px tetap punya area tap 44 px.
+  logo tetap punya area tap 44 px.
+
 
 Revamp peta-sebagai-produk, 16 November 2026 (satu alasan per keputusan):
 
@@ -115,10 +123,12 @@ Revamp peta-sebagai-produk, 16 November 2026 (satu alasan per keputusan):
   satunya bukti visual yang dimiliki proyek ini.
 - SVG rute ditulis inline, bukan `img`: hanya elemen inline yang bisa dianimasikan
   `stroke-dashoffset` oleh stylesheet, dan hasilnya nol request tambahan.
-- Panel peta berlatar `--navy` dengan rute `--orange` (5,74:1, lolos 3:1 untuk
-  grafik) supaya kartu terbaca sebagai permukaan produk, bukan ilustrasi.
-- Rute terpanjang memakai opasitas 1 dan tebal 2,4 px, tiga lainnya 0,45: mata
-  punya satu jalur utama tanpa legenda tambahan.
+- Panel peta berlatar `--paper` dengan bingkai tinta 4 px dan rute `--red`
+  (5,18:1 di atas paper, lolos 3:1 untuk grafik) supaya kartu terbaca sebagai
+  permukaan produk, bukan ilustrasi.
+- Rute terpanjang memakai opasitas 1 dan tebal 4 px tanpa garis putus, tiga
+  lainnya garis putus 5-4 pada opasitas 0,45: mata punya satu jalur utama tanpa
+  legenda tambahan.
 - `<svg aria-hidden="true">` plus `figcaption` berisi angka: pembaca layar tidak
   perlu mendengar daftar koordinat, tetapi tetap mendapat fakta.
 - Logo hanya dimuat sekali, di header, tanpa `fetchpriority`: gambar hero yang
@@ -130,7 +140,7 @@ Revamp peta-sebagai-produk, 16 November 2026 (satu alasan per keputusan):
   penjelasan format (R-14).
 - Batas pita penuh dan sempit 64ch: bagian kejujuran dibaca sebagai catatan,
   bukan sebagai kartu pemasaran; butir gate yang masih gagal ditandai lencana
-  oranye "Open gate" karena itulah satu-satunya status yang belum lulus.
+  merah "Open gate" karena itulah satu-satunya status yang belum lulus.
 - Nav "Repositories" menuju GitHub org, bukan jangkar footer: jangkar memaksa
   footer memakai dua `h2` yang bersaing dengan judul bagian.
 - Tema tetap terang, tanpa toggle: tile OSM yang disediakan hanya terang, jadi
@@ -145,7 +155,7 @@ Revamp peta-sebagai-produk, 16 November 2026 (satu alasan per keputusan):
 
 Naskah ditulis bahasa Inggris karena semua dokumen publik berbahasa Inggris.
 
-1. **Header** (sticky tipis, tinggi 64 px): mark logo, `Nusapeta`, tautan
+1. **Header** (sticky tipis, tinggi 68 px): mark logo, `Nusapeta`, tautan
    `Demo`, `Quickstart`, `Repositories`. Semua tautan punya tujuan nyata.
 2. **Hero**: H1 "Routing and geocoding for Indonesia, on your own machine."
    Subjudul menyebut dua artefak konkret (binary router, satu file index) dan
@@ -196,7 +206,7 @@ Tidak ada bagian testimoni, logo pelanggan, pricing, FAQ template, atau
 - Semua pasangan warna di §5 dihitung dengan pemeriksa kontras, bukan dikira.
 - `html lang="en"`, satu `<main>`, hierarki heading tanpa lompatan, `<title>`
   unik, skip link ke konten.
-- Fokus terlihat (`:focus-visible`, outline 2 px navy + offset), tidak ada
+- Fokus terlihat (`:focus-visible`, outline 3 px biru + offset 3 px), tidak ada
   `outline: none` tanpa pengganti.
 - Target sentuh minimum 44x44 px, jarak antar target minimal 8 px.
 - Tab melalui seluruh kontrol: nav, dua CTA, tiga tautan permintaan, tombol
