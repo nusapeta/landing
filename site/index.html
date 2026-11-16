@@ -16,7 +16,7 @@
 <link rel="icon" href="/assets/favicon-64.png" sizes="64x64" type="image/png">
 <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<link rel="stylesheet" href="/styles.css?v=4">
+<link rel="stylesheet" href="/styles.css?v=5">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -31,7 +31,7 @@
       <ul class="nav-list">
         <li><a href="https://demo.nusapeta.web.id/">Demo</a></li>
         <li><a href="#quickstart">Quickstart</a></li>
-        <li><a href="#repos">Repositories</a></li>
+        <li><a href="https://github.com/nusapeta">Repositories</a></li>
       </ul>
     </nav>
   </div>
@@ -52,17 +52,35 @@
           <a class="button button-quiet" href="#quickstart">See what it takes to run</a>
         </p>
       </div>
-      <div class="hero-mark">
-        <img src="/assets/logo-mark.png" alt="" width="512" height="375" fetchpriority="high">
-      </div>
+      <figure class="hero-map">
+        <div class="hero-map-head">
+          <span>Jakarta, car profile</span>
+          <span>4 routes from Monas</span>
+        </div>
+        <svg class="hero-map-svg" viewBox="0 0 560 760" aria-hidden="true" focusable="false">
+          <path class="hero-route hero-route-1" d="M258.4,254.9 259.4,257.5 261.5,251.5 259.4,244.6 253.8,241.8 253.3,233.9 211.8,229.8 170.0,52.3 166.8,42.2 158.8,43.1 155.4,30.0" pathLength="1"/>
+          <path class="hero-route hero-route-2" d="M258.4,254.9 259.4,257.5 259.5,240.5 276.6,231.8 282.4,236.9 313.3,223.8 331.0,297.9 369.1,366.6 405.7,404.0 429.2,461.1 457.7,479.0 465.8,500.3 463.7,523.1 514.5,524.1 527.6,531.2 513.6,524.4" pathLength="1"/>
+          <path class="hero-route hero-route-3" d="M258.4,254.9 259.4,257.5 261.5,251.5 259.4,244.6 253.8,241.8 253.3,233.9 221.4,235.2 221.6,394.5 214.7,436.1 204.6,458.2 194.5,471.8 101.1,542.5 98.2,551.5 98.9,572.2 108.2,599.5 109.2,624.2 131.9,654.1 147.5,663.9 139.3,691.3 175.2,693.0 180.8,727.9 173.5,730.0" pathLength="1"/>
+          <path class="hero-route hero-route-4" d="M258.4,254.9 259.4,257.5 261.5,251.5 259.4,244.6 253.8,241.8 253.3,233.9 212.4,230.7 203.4,195.6 179.8,200.2 36.3,208.7 32.4,217.1" pathLength="1"/>
+          <circle class="hero-route-origin" cx="258.4" cy="254.9" r="7"/>
+          <circle class="hero-route-end" cx="155.4" cy="30.0" r="5"/>
+          <circle class="hero-route-end" cx="513.6" cy="524.4" r="5"/>
+          <circle class="hero-route-end" cx="173.5" cy="730.0" r="5"/>
+          <circle class="hero-route-end" cx="32.4" cy="217.1" r="5"/>
+        </svg>
+        <figcaption>6.1 km to 14.0 km, 7 to 16 minutes. Geometry returned by the
+          live demo on 16 November 2026, simplified for drawing.</figcaption>
+      </figure>
     </div>
   </section>
 
   <section class="measure" aria-labelledby="measure-title">
-    <div class="wrap">
-      <h2 id="measure-title">Measured on this deployment</h2>
-      <p class="section-note">Numbers below come from the running stack and the
-        repository files, not from estimates. Date of measurement: 15 November 2026.</p>
+    <div class="wrap measure-grid">
+      <div class="measure-intro">
+        <h2 id="measure-title">Measured on this deployment</h2>
+        <p class="section-note">Numbers below come from the running stack and the
+          repository files, not from estimates. Date of measurement: 15 November 2026.</p>
+      </div>
       <div class="table-scroll">
         <table>
           <caption class="sr-only">Measured values for the Nusapeta stack</caption>
@@ -86,6 +104,11 @@
       <div class="engine-grid">
         <article class="engine engine-route">
           <h3>Route</h3>
+          <dl class="engine-stats">
+            <div><dt>Sample distance</dt><dd>10,724 m</dd></div>
+            <div><dt>Duration</dt><dd>680.9 s</dd></div>
+            <div><dt>Profile</dt><dd>car</dd></div>
+          </dl>
           <p>
             The national graph is read with <code>mmap</code>, so two profiles share
             the same pages and each router process idles near 17 MB. The on-disk
@@ -142,8 +165,8 @@
   </section>
 
   <section class="quickstart" id="quickstart" aria-labelledby="quickstart-title">
-    <div class="wrap quickstart-grid">
-      <div>
+    <div class="wrap quickstart-inner">
+      <div class="quickstart-intro">
         <h2 id="quickstart-title">Run it yourself</h2>
         <p>
           The compose bundle is <a href="https://github.com/nusapeta/stack">nusapeta/stack</a>.
@@ -166,7 +189,8 @@ scripts/e2e.sh</code></pre>
     <div class="wrap">
       <h2 id="limits-title">What this does not claim</h2>
       <ol class="limit-list">
-        <li>
+        <li class="limit-open">
+          <span class="limit-flag">Open gate</span>
           <strong>Route accuracy has not passed our internal gate.</strong>
           The E1 gate failed: median difference against the reference is 0.23 %,
           the 95th percentile is 14.49 %. The gate stays open and these numbers
@@ -192,31 +216,34 @@ scripts/e2e.sh</code></pre>
 </main>
 
 <footer class="site-footer" id="repos">
-  <div class="wrap footer-grid">
-    <div>
-      <h2 class="footer-title">Repositories</h2>
-      <ul class="footer-links">
-        <li><a href="https://github.com/nusapeta/route">nusapeta/route</a></li>
-        <li><a href="https://github.com/nusapeta/place">nusapeta/place</a></li>
-        <li><a href="https://github.com/nusapeta/stack">nusapeta/stack</a></li>
-        <li><a href="https://demo.nusapeta.web.id/">Live demo</a></li>
-      </ul>
+  <div class="wrap">
+    <h2 class="footer-title">Repositories and paperwork</h2>
+    <div class="footer-grid">
+      <div>
+        <h3 class="footer-subtitle">Repositories</h3>
+        <ul class="footer-links">
+          <li><a href="https://github.com/nusapeta/route">nusapeta/route</a></li>
+          <li><a href="https://github.com/nusapeta/place">nusapeta/place</a></li>
+          <li><a href="https://github.com/nusapeta/stack">nusapeta/stack</a></li>
+          <li><a href="https://demo.nusapeta.web.id/">Live demo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer-subtitle">Paperwork</h3>
+        <ul class="footer-links">
+          <li>Code: MIT license</li>
+          <li>Data: ODbL 1.0, <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></li>
+          <li><a href="https://github.com/nusapeta/stack/blob/main/SECURITY.md">Security policy</a></li>
+        </ul>
+      </div>
+      <p class="footer-note">
+        Research preview. Nothing here is a commercial service, and the demo can
+        stop without notice.
+      </p>
     </div>
-    <div>
-      <h2 class="footer-title">Paperwork</h2>
-      <ul class="footer-links">
-        <li>Code: MIT license</li>
-        <li>Data: ODbL 1.0, <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a></li>
-        <li><a href="https://github.com/nusapeta/stack/blob/main/SECURITY.md">Security policy</a></li>
-      </ul>
-    </div>
-    <p class="footer-note">
-      Research preview. Nothing here is a commercial service, and the demo can
-      stop without notice.
-    </p>
   </div>
 </footer>
 
-<script src="/app.js?v=4" defer></script>
+<script src="/app.js?v=5" defer></script>
 </body>
 </html>

@@ -44,13 +44,16 @@ tidak butuh cerita merek.
 
 > Reading this as: project landing page for developers evaluating a self-hosted
 > OSM stack, in a cartographic brand language taken from the supplied logo
-> (teal, orange, navy on white), dial ENERGY 2 / RHYTHM 2 / MOTION 1.
+> (teal, orange, navy on white), dial ENERGY 2 / RHYTHM 3 / MOTION 2.
 
 - **ENERGY 2**: tegas lewat ukuran huruf dan angka, bukan lewat warna ramai.
-- **RHYTHM 2**: tiap bagian punya komposisi berbeda (teks lebar, dua kolom
-  asimetris, tabel, daftar bernomor), tetapi tetap satu sistem.
-- **MOTION 1**: hanya `:hover`, `:focus-visible`, dan transisi 120 ms. Tidak ada
-  animasi masuk, tidak ada parallax, tidak ada loop.
+- **RHYTHM 3**: komposisi antar-bagian wajib terlihat beda: hero dua kolom
+  dengan kartu peta, ukur dua kolom 0,75/1,7, mesin 1,6/1, batas pita penuh,
+  quickstart bertumpuk selebar 68ch, batas satu kolom 64ch.
+- **MOTION 2**: satu animasi masuk yang punya alasan, yaitu garis rute digambar
+  sekali (900 ms, `both`, bertahap 80/200/320/440 ms), dimatikan total oleh
+  `prefers-reduced-motion`. Tidak ada loop, parallax, atau animasi hover. Alasan:
+  rute adalah subjek produk, jadi gerak pertama menjelaskan bentuk datanya.
 
 ## 5. Identitas visual
 
@@ -103,6 +106,40 @@ Keputusan modernisasi 16 November 2026 (satu alasan per keputusan):
   terbaca sebagai objek terpisah tanpa ikon atau lencana.
 - `min-width: 44px` pada `.brand`: saat wordmark disembunyikan di layar kecil,
   logo 43,69 px tetap punya area tap 44 px.
+
+Revamp peta-sebagai-produk, 16 November 2026 (satu alasan per keputusan):
+
+- Hero memuat kartu peta, bukan lambang kedua: empat rute mobil nyata dari Monas
+  (6,1 sampai 14,0 km, diambil dari demo pada 16 November 2026 dan disederhanakan
+  Douglas-Peucker ke toleransi 0,00045 derajat) karena geometri rute adalah satu-
+  satunya bukti visual yang dimiliki proyek ini.
+- SVG rute ditulis inline, bukan `img`: hanya elemen inline yang bisa dianimasikan
+  `stroke-dashoffset` oleh stylesheet, dan hasilnya nol request tambahan.
+- Panel peta berlatar `--navy` dengan rute `--orange` (5,74:1, lolos 3:1 untuk
+  grafik) supaya kartu terbaca sebagai permukaan produk, bukan ilustrasi.
+- Rute terpanjang memakai opasitas 1 dan tebal 2,4 px, tiga lainnya 0,45: mata
+  punya satu jalur utama tanpa legenda tambahan.
+- `<svg aria-hidden="true">` plus `figcaption` berisi angka: pembaca layar tidak
+  perlu mendengar daftar koordinat, tetapi tetap mendapat fakta.
+- Logo hanya dimuat sekali, di header, tanpa `fetchpriority`: gambar hero yang
+  lama memakai prioritas tinggi untuk aset dekoratif.
+- Bagian "ukur" dipecah 0,75/1,7 dengan judul sempit 16ch: tabel mendapat lebar
+  yang dibutuhkannya, judul tidak lagi mengambang sendirian (RHYTHM 3).
+- Blok Route mendapat `dl` angka sampel (10.724 m, 680,9 s, car) sementara Place
+  tetap prosa: Route adalah unggulan, jadi ia mendapat angka, Place mendapat
+  penjelasan format (R-14).
+- Batas pita penuh dan sempit 64ch: bagian kejujuran dibaca sebagai catatan,
+  bukan sebagai kartu pemasaran; butir gate yang masih gagal ditandai lencana
+  oranye "Open gate" karena itulah satu-satunya status yang belum lulus.
+- Nav "Repositories" menuju GitHub org, bukan jangkar footer: jangkar memaksa
+  footer memakai dua `h2` yang bersaing dengan judul bagian.
+- Tema tetap terang, tanpa toggle: tile OSM yang disediakan hanya terang, jadi
+  mode gelap akan menuntut tile kedua atau filter invers yang merusak label peta.
+  Alasan ini dicatat di sini dan di README demo; ditinjau ulang bila ada sumber
+  tile gelap.
+- Bahasa dipisah dengan sengaja: Inggris untuk halaman ini (audiens open source),
+  Indonesia untuk demo (audiens pengguna peta lokal). Istilah API tetap sama di
+  keduanya.
 
 ## 6. Struktur halaman dan naskah
 
@@ -180,6 +217,9 @@ Tidak ada bagian testimoni, logo pelanggan, pricing, FAQ template, atau
 | Tanpa gulir horizontal | screenshot 375 px + `document.documentElement.scrollWidth <= innerWidth` | benar di semua lebar uji |
 | Kontras | pemeriksa kontras untuk setiap pasangan §5 | semua lolos AA |
 | Keyboard | Tab berurutan, Enter pada tautan, tombol salin aktif | semua kontrol terjangkau, fokus terlihat |
+| Hero peta | `document.querySelectorAll(".hero-route").length` dan `getComputedStyle(path).animationName` | 4 path, `hero-route-draw` aktif, `stroke-dashoffset` 0 setelah 1,4 s |
+| Geometri hero | angka di `figcaption` dibandingkan dengan `/route` demo | jarak 6,1 sampai 14,0 km cocok dengan respons API 16 November 2026 |
+| Gerak dihormati | blok `@media (prefers-reduced-motion: no-preference)` di `styles.css` | animasi hanya ada di dalam blok itu; rute terlihat penuh tanpa animasi |
 | Multi-arch | `docker buildx imagetools inspect ghcr.io/nusapeta/landing:0.1.0` | `linux/amd64` dan `linux/arm64` |
 | Deploy | `docker ps` di homelab | `nusapeta-lp` sehat, jaringan `1panel-network` |
 
