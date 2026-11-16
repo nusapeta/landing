@@ -109,7 +109,7 @@ pre {
   background: var(--cream);
   border: 2px solid var(--ink);
   border-radius: 0;
-  padding: 0 4px;
+  padding: 2px 5px;
   font-size: 0.86em;
 }
 
@@ -307,7 +307,7 @@ pre {
   justify-content: space-between;
   gap: 4px 12px;
   margin: 0;
-  padding: 7px 10px;
+  padding: 10px 12px;
   background: var(--ink);
   color: var(--cream);
   border-bottom: 4px solid var(--ink);
@@ -361,7 +361,7 @@ pre {
 
 .hero-map figcaption {
   margin: 0;
-  padding: 8px 10px;
+  padding: 10px 12px;
   border-top: 4px solid var(--ink);
   background: var(--cream);
   color: var(--ink);
@@ -511,7 +511,7 @@ td code {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   margin: 16px 0 0;
-  padding: 10px 0;
+  padding: 12px;
   border: 3px solid var(--ink);
   background: var(--cream);
 }
@@ -591,7 +591,7 @@ td code {
   grid-template-columns: 96px minmax(0, 1fr) auto;
   gap: 24px;
   align-items: start;
-  padding: 18px 0;
+  padding: 18px 16px;
   border: 3px solid #6f6a5c;
   border-radius: 0;
   background: #1c1a15;
@@ -738,7 +738,7 @@ td code {
 .limit-flag {
   display: inline-block;
   margin-bottom: 8px;
-  padding: 2px 8px;
+  padding: 4px 9px;
   border: 3px solid var(--ink);
   border-radius: 0;
   background: var(--red);
