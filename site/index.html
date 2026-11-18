@@ -79,7 +79,8 @@
       <div class="measure-intro">
         <h2 id="measure-title">Measured on this deployment</h2>
         <p class="section-note">Numbers below come from the running stack and the
-          repository files, not from estimates. Date of measurement: 15 November 2026.</p>
+          repository files, not from estimates. Date of measurement: 15 November 2026.
+          Per-island artifacts and RSS are in the <a href="#artifacts">artifact table</a>.</p>
       </div>
       <div class="table-scroll">
         <table>
@@ -95,6 +96,52 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </section>
+
+  <section class="measure artifacts" id="artifacts" aria-labelledby="artifacts-title">
+    <div class="wrap">
+      <div class="measure-intro">
+        <h2 id="artifacts-title">Artifacts by island</h2>
+        <p class="section-note">Built by <code>make islands</code> in
+          <code>nusapeta/route</code> at commit <code>843c493</code>. Measured
+          18 November 2026, 16:31 UTC, on Linux 7.2.15-1-omarchy x86_64 with
+          <code>stat -c %s</code> and <code>bin/nusa-graphinfo</code>. Sizes are
+          exact file bytes. Reproduce with <code>scripts/measure-artifacts.sh
+          ../routeid</code> from this checkout.</p>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <caption class="sr-only">Graph artifacts produced by make islands</caption>
+          <thead>
+            <tr><th scope="col">Island</th><th scope="col">Graph bytes</th><th scope="col">Nodes</th><th scope="col">Edges</th><th scope="col">Format</th><th scope="col">Built (UTC)</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Java</th><td>693,316,412</td><td>23,458,512</td><td>48,319,115</td><td>v5</td><td>2026-11-12</td></tr>
+            <tr><th scope="row">Sumatra</th><td>353,320,893</td><td>11,954,298</td><td>24,489,374</td><td>v5</td><td>2026-11-12</td></tr>
+            <tr><th scope="row">Nusa Tenggara</th><td>148,783,491</td><td>5,057,066</td><td>10,231,622</td><td>v5</td><td>2026-11-12</td></tr>
+            <tr><th scope="row">Maluku</th><td>24,639,438</td><td colspan="3">Stale v4, rejected by the current extractor; not rebuilt here</td><td>2026-11-10</td></tr>
+            <tr><th scope="row">Kalimantan</th><td colspan="5">No graph in this checkout</td></tr>
+            <tr><th scope="row">Sulawesi</th><td colspan="5">No graph in this checkout</td></tr>
+            <tr><th scope="row">Papua</th><td colspan="5">No graph in this checkout</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="section-note">Idle RSS on <code>java.graph</code>:
+        <code>VmRSS 15,072 kB</code>, <code>RssAnon 6,724 kB</code>. After 200
+        sequential route requests: <code>VmRSS 26,572 kB</code>,
+        <code>RssAnon 11,388 kB</code>. Same graph and machine,
+        <code>bin/nusa-serve -conc 1 -rate 0 -timeout 10s</code>, 30 seconds of
+        idle settle before the first sample. Values are read from
+        <code>/proc/&lt;pid&gt;/status</code>, not estimated.</p>
+      <p class="section-note">Image budget for 1.0 is 32 MB target and 40 MB
+        hard cap. The router image measured 36.8 MB on 15 November 2026: under
+        the cap, above the target.</p>
+      <p class="section-note">Graph and index data: ODbL 1.0,
+        <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.
+        Where a build renumbers features, <code>osm_type</code> plus
+        <code>osm_id</code> is the identity to use; <code>place_id</code> is not
+        treated as a stable external key here.</p>
     </div>
   </section>
 

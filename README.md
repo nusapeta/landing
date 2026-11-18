@@ -105,6 +105,26 @@ Checked again 2026-11-16 after the map revamp, on the deployed site:
 | Footer headings | one `h2` ("Repositories and paperwork") plus two `h3` labels |
 | Demo counterpart | route core carries `pathLength="1"` and `route-core-draw`; pins read 1 and 2; tile filter `saturate(0.55) contrast(1.04) brightness(1.02)` |
 
+## Artifact and RSS measurement
+
+`scripts/measure-artifacts.sh ../routeid` reproduces the island table on the
+page. It reads the files produced by `make islands` in `nusapeta/route`, then
+runs a local `nusa-serve` on `java.graph` and samples `/proc/<pid>/status`.
+
+Measured 2026-11-18 16:31 UTC on Linux 7.2.15-1-omarchy x86_64, route commit
+`843c493`, graph `java.graph` built 2026-11-12T09:22:10Z:
+
+| State | VmRSS | RssAnon |
+|---|---|---|
+| 30 s idle | 15,072 kB | 6,724 kB |
+| after 200 sequential `/route` requests | 26,572 kB | 11,388 kB |
+
+Java, Sumatra, and Nusa Tenggara have v5 graphs with counts listed on the
+page. Maluku on this machine is a stale v4 file that the current extractor
+rejects. Kalimantan, Sulawesi, and Papua have no graph file here, so the page
+shows them as unbuilt instead of inventing sizes. `python3 scripts/check.py`
+passes with the new section and anchor.
+
 ## License
 
 Code and page copy: MIT, see `LICENSE`. The logo and the images derived from it
