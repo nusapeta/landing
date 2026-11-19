@@ -105,6 +105,55 @@ Checked again 2026-11-16 after the map revamp, on the deployed site:
 | Footer headings | one `h2` ("Repositories and paperwork") plus two `h3` labels |
 | Demo counterpart | route core carries `pathLength="1"` and `route-core-draw`; pins read 1 and 2; tile filter `saturate(0.55) contrast(1.04) brightness(1.02)` |
 
+## Artifact and RSS measurement
+
+`scripts/measure-artifacts.sh ../routeid` reproduces the island table on the
+page. It reads the files produced by `make islands` in `nusapeta/route`, then
+runs a local `nusa-serve` on `java.graph` and samples `/proc/<pid>/status`.
+
+Measured 2026-11-18 16:31 UTC on Linux 7.2.15-1-omarchy x86_64, route commit
+`843c493`, graph `java.graph` built 2026-11-12T09:22:10Z:
+
+| State | VmRSS | RssAnon |
+|---|---|---|
+| 30 s idle | 15,072 kB | 6,724 kB |
+| after 200 sequential `/route` requests | 26,572 kB | 11,388 kB |
+
+Java, Sumatra, and Nusa Tenggara have v5 graphs with counts listed on the
+page. Maluku on this machine is a stale v4 file that the current extractor
+rejects. Kalimantan, Sulawesi, and Papua have no graph file here, so the page
+shows them as unbuilt instead of inventing sizes. `python3 scripts/check.py`
+passes with the new section and anchor.
+
+## Sprint section, checked 2026-11-19
+
+The `#sprint` section lists the endpoints added by the 18 to 19 November
+branch work. Every number in it was re-measured against binaries built from
+those branches, not copied from the PR text.
+
+| Check | Result |
+|---|---|
+| `scripts/check.py` | 2 pages, no broken anchors, no missing assets, no em or en dash |
+| Section anchor | `#sprint` resolves from the nav item `Changes` |
+| Rows | 9, one per endpoint or parameter group |
+| Layout at 320, 375, 768, 1024, 1440 px | no horizontal overflow; nav wraps at 560 px and below |
+| Mobile table | `thead` visually hidden, each cell labelled Added / Measured here |
+| Public demo, new paths | `/matrix`, `/isochrone`, `/nearest` return 404; `/route` returns 200 |
+| `/matrix`, Monas to three targets | 45 ms, 133,244 expansions, 10,784 / 3,975 / 6,292 m |
+| `/isochrone`, Monas 5 minutes | 21.06 km², 2 features, grid 250 m, 23,095 nodes, 11 ms |
+| `/nearest`, Monas | 311 m, three candidates, 4 ms |
+| `avoid=toll`, Monas to Depok | 30,839 m / 1,740.6 s free, 31,103 m / 2,260.8 s avoiding toll |
+| `via`, one waypoint | 31,951 m / 1,956.8 s, 2 legs, 936 points |
+| `alt=3` | 0 alternatives on six Jakarta pairs, no error |
+| Ferry, Bakauheni to Merak | 29,784 m / 5,340.3 s, 27,596 m ferry, `has_ferry` true |
+| `/place/suggest` | `q=monas` with bias returns five records, `q=mo` returns 400 |
+| `/place/admin/reverse` | Monas resolves to Gambir with `ambiguous: false` on a rebuilt 386 MB index; the 142 MB index answers 501 `no_admin_polygons` |
+
+The `/place/admin/reverse` row names both states: the handler exists on its
+branch, the shipped 142 MB `places.idx` was written without admin polygons and
+answers 501, and an index rebuilt from the same 19 November PBF with the
+branch builder (386 MB) answers with the administrative chain.
+
 ## License
 
 Code and page copy: MIT, see `LICENSE`. The logo and the images derived from it
