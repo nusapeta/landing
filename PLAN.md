@@ -250,7 +250,40 @@ Tidak ada bagian testimoni, logo pelanggan, pricing, FAQ template, atau
 | Angka di halaman basi setelah rilis mesin | klaim salah | angka menyebut tanggal ukur; perbarui bersama rilis mesin |
 | Cache HTML agresif di Cloudflare | perubahan tidak terlihat | `max-age=300` dan purge manual saat rilis |
 
-## 12. Rollback
+## 12. Bagian sprint 18-19 November 2026
+
+`#sprint` ditambahkan 19 November 2026, di antara bagian mesin dan bagian coba.
+Isinya tabel sembilan baris: `/matrix`, `/isochrone`, `/nearest`, `avoid`, `via`,
+`alt` pada `/route`, penjahitan ferry, `/place/suggest`, dan
+`/place/admin/reverse`.
+
+Aturan yang dipakai:
+
+- Setiap angka diukur dari binary yang dibangun dari branch sprint, bukan
+  dikutip dari teks PR. Tanggal ukur, versi kernel, dan tanggal artefak
+  (`java.graph` 12 November, `places.idx` 19 November) disebut di paragraf
+  pembuka.
+- Demo publik masih menjawab build sebelumnya, jadi endpoint baru ditandai
+  `(new)` dan paragraf pembuka menyebut bahwa demo mengembalikan 404.
+- Baris `alt` menyebut hasil yang terukur (nol alternatif pada enam pasangan
+  Jakarta) dan menyebut bahwa responsnya tetap rute terpendek tanpa error.
+- Baris `/place/admin/reverse` menyebut dua keadaan: index 19 November (142 MB)
+  tidak memuat poligon admin sehingga endpoint menjawab 501 `no_admin_polygons`,
+  sedangkan index yang dibangun ulang dari PBF yang sama dengan builder branch
+  (386 MB) menjawab `Gambir, Jakarta Pusat, ...` untuk titik Monas.
+- Hasil ukur admin: Monas dan Surabaya (Ketabang, Genteng, Surabaya) keduanya
+  `ambiguous: false`; titik di Laut Jawa memakai poligon provinsi terdekat yang
+  memuatnya.
+- Batas parameter dikutip dari konstanta kode: 5 sumber, 25 target, 25 sel,
+  `max_minutes` positif maksimum 180, 1.500.000 ekspansi, grid 50 sampai 10.000
+  m dengan plafon 40.000 sel, `k` 1 sampai 32, `minutes` 1 sampai 60, `limit`
+  1 sampai 20.
+- Tabel memakai gaya tabel yang sudah ada. Pada 560 px ke bawah header tabel
+  disembunyikan dan setiap sel diberi label lewat `::before`.
+- Nav mendapat satu tautan `Changes`; daftar nav membungkus pada 560 px ke bawah agar
+  320 px tetap tanpa gulir horizontal.
+
+## 13. Rollback
 
 `docker compose -f deploy/compose.yml down` di homelab mengembalikan tunnel ke
 502. Image sebelumnya tetap ada dengan tag `0.1.0`; tidak ada data yang

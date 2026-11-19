@@ -16,7 +16,7 @@
 <link rel="icon" href="/assets/favicon-64.png?v=6" sizes="64x64" type="image/png">
 <link rel="icon" href="/assets/favicon-32.png?v=6" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=6">
-<link rel="stylesheet" href="/styles.css?v=6">
+<link rel="stylesheet" href="/styles.css?v=7">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -30,6 +30,7 @@
     <nav aria-label="Primary">
       <ul class="nav-list">
         <li><a href="https://demo.nusapeta.web.id/">Demo</a></li>
+        <li><a href="#sprint">Changes</a></li>
         <li><a href="#quickstart">Quickstart</a></li>
         <li><a href="https://github.com/nusapeta">Repositories</a></li>
       </ul>
@@ -174,6 +175,78 @@
           <p class="engine-link"><a href="https://github.com/nusapeta/place">nusapeta/place</a></p>
         </article>
       </div>
+    </div>
+  </section>
+
+  <section class="sprint" id="sprint" aria-labelledby="sprint-title">
+    <div class="wrap">
+      <h2 id="sprint-title">Added in this sprint</h2>
+      <p class="section-note">Sprint of 18 to 19 November 2026. Every number below
+        comes from binaries built from the sprint branches and run on this
+        machine on 19 November 2026, not from the public demo: the pull
+        requests are still open, so
+        <code>demo.nusapeta.web.id</code> answers with the previous build and
+        returns 404 for the endpoints marked new. Measured on Linux
+        7.2.15-1-omarchy x86_64, <code>java.graph</code> built 12 November 2026 and <code>places.idx</code> built 19 November 2026.</p>
+      <div class="table-scroll">
+        <table>
+          <caption class="sr-only">Endpoints and limits added in the 18 to 19 November sprint</caption>
+          <thead>
+            <tr><th scope="col">Endpoint</th><th scope="col">Added</th><th scope="col">Measured here</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><code>/matrix</code> (new)</th>
+              <td>One Dijkstra per source fills a whole row. 1 to 5 sources, 1 to 25 targets, at most 25 pairs, <code>max_minutes</code> positive, at most 180. Cells report <code>ok</code>, <code>too_far</code>, <code>snap_failed</code> or <code>no_route</code>.</td>
+              <td>Monas to three Jakarta targets: 10,784 m / 685.4 s, 3,975 m / 280.9 s, 6,292 m / 411.6 s. 45 ms, 133,244 expansions.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>/isochrone</code> (new)</th>
+              <td>GeoJSON rings from a time-limited Dijkstra. <code>minutes</code> 1 to 60, <code>grid</code> 50 to 10,000 m, raised automatically past 40,000 cells, then simplified at 25 m.</td>
+              <td>Monas, 5 minutes: 21.06 km<sup>2</sup> in two rings, grid 250 m, 23,095 nodes, 11 ms.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>/nearest</code> (new)</th>
+              <td>Snaps a coordinate to the closest road edge without running a route search. <code>k</code> returns up to 32 candidates with edge and node ids.</td>
+              <td>Monas: 311 m to the nearest edge, three candidates returned, 4 ms.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>avoid</code> on <code>/route</code></th>
+              <td><code>toll</code>, <code>ferry</code>, <code>unpaved</code>, <code>motorway</code>, comma or pipe separated. Edges are filtered during expansion, so snapping and expansion counts move too.</td>
+              <td>Monas to Depok: 30,839 m / 1,740.6 s free, 31,103 m / 2,260.8 s with <code>avoid=toll</code>. An unknown class returns 400.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>via</code> on <code>/route</code></th>
+              <td>Up to five waypoints as <code>lat,lng</code> pairs joined by a pipe; legs are routed in order and joined into one point list.</td>
+              <td>Monas to Depok through one waypoint: 31,951 m / 1,956.8 s, two legs, 936 points.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>alt</code> on <code>/route</code></th>
+              <td>Up to three extra routes, each accepted only when at least 20 % of its edge length differs from the routes already accepted.</td>
+              <td>None of the six Jakarta pairs tried here returned an alternative, and the response still carries the shortest route without an error.</td>
+            </tr>
+            <tr>
+              <th scope="row">Ferry stitching</th>
+              <td>Cross-strait legs use measured OSM duration where a connector exists, otherwise a static table of ten crossings. <code>ferry_time_source</code> says which when the route crosses region files; a same-file crossing reports only <code>ferry_m</code> and <code>ferry_spans</code>.</td>
+              <td>Bakauheni to Merak: 29,784 m / 5,340.3 s, of which 27,596 m is ferry, <code>has_ferry</code> true.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>/place/suggest</code> (new)</th>
+              <td>Prefix autocomplete over the index, at least 3 characters after normalisation, 1 to 20 results, optional <code>lat</code>/<code>lon</code> bias. Shorter queries return 400.</td>
+              <td><code>q=monas</code> with a Monas bias returns five records: four named Monumen Nasional (a node and three ways) and Monas in Gorontalo Utara. <code>q=mo</code> returns 400 <code>invalid_request</code>.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>/place/admin/reverse</code> (new)</th>
+              <td>Deepest administrative polygon that contains the point, walked through <code>parent_id</code> instead of centroid distance. Sets <code>ambiguous</code> when several polygons at that level match.</td>
+              <td>Monas: Gambir, Jakarta Pusat, Daerah Khusus Ibukota Jakarta, <code>ambiguous</code> false. Needs an index rebuilt with the rings (386 MB against 142 MB); the current index answers 501 <code>no_admin_polygons</code>. Street reverse still never interpolates house numbers.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="section-note">Route status on this branch is unchanged: the E1 gate
+        still fails at 0.23 % median and 14.49 % at the 95th percentile, and the
+        two-level hierarchy work stays blocked until its data prerequisite is
+        met. The release keeps the same 15 requests per minute per IP limit.</p>
     </div>
   </section>
 
