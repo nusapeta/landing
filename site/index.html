@@ -103,21 +103,25 @@
   <section class="measure artifacts" id="artifacts" aria-labelledby="artifacts-title">
     <div class="wrap">
       <div class="measure-intro">
-        <h2 id="artifacts-title">Artifacts by island</h2>
-        <p class="section-note">Built by <code>make islands</code> in
-          <code>nusapeta/route</code> at commit <code>843c493</code>. Measured
-          18 November 2026, 16:31 UTC, on Linux 7.2.15-1-omarchy x86_64 with
-          <code>stat -c %s</code> and <code>bin/nusa-graphinfo</code>. Sizes are
-          exact file bytes. Reproduce with <code>scripts/measure-artifacts.sh
-          ../routeid</code> from this checkout.</p>
+        <h2 id="artifacts-title">Artifacts</h2>
+        <p class="section-note">The national graph is built by <code>make graph
+          REGION=indonesia</code>, the island graphs by <code>make islands</code>, in
+          <code>nusapeta/route</code>. The national row was remeasured 19 November
+          2026 after the island rebuild at commit <code>0ccb2fc</code>; the island
+          rows are the 18 November 2026 build at commit <code>843c493</code>. Both
+          read with <code>stat -c %s</code> and <code>bin/nusa-graphinfo</code> on
+          Linux 7.2.15-1-omarchy x86_64. Sizes are exact file bytes. Reproduce with
+          <code>scripts/measure-artifacts.sh ../routeid</code> from this
+          checkout.</p>
       </div>
       <div class="table-scroll">
         <table>
-          <caption class="sr-only">Graph artifacts produced by make islands</caption>
+          <caption class="sr-only">Graph artifacts produced by make graph and make islands</caption>
           <thead>
             <tr><th scope="col">Island</th><th scope="col">Graph bytes</th><th scope="col">Nodes</th><th scope="col">Edges</th><th scope="col">Format</th><th scope="col">Built (UTC)</th></tr>
           </thead>
           <tbody>
+            <tr><th scope="row">Indonesia</th><td>1,621,222,585</td><td>54,891,393</td><td>112,340,071</td><td>v5</td><td>2026-11-19</td></tr>
             <tr><th scope="row">Java</th><td>693,316,412</td><td>23,458,512</td><td>48,319,115</td><td>v5</td><td>2026-11-12</td></tr>
             <tr><th scope="row">Sumatra</th><td>353,320,893</td><td>11,954,298</td><td>24,489,374</td><td>v5</td><td>2026-11-12</td></tr>
             <tr><th scope="row">Nusa Tenggara</th><td>148,783,491</td><td>5,057,066</td><td>10,231,622</td><td>v5</td><td>2026-11-12</td></tr>
@@ -128,12 +132,13 @@
           </tbody>
         </table>
       </div>
-      <p class="section-note">Idle RSS on <code>java.graph</code>:
-        <code>VmRSS 15,072 kB</code>, <code>RssAnon 6,724 kB</code>. After 200
-        sequential route requests: <code>VmRSS 26,572 kB</code>,
-        <code>RssAnon 11,388 kB</code>. Same graph and machine,
-        <code>bin/nusa-serve -conc 1 -rate 0 -timeout 10s</code>, 30 seconds of
-        idle settle before the first sample. Values are read from
+      <p class="section-note">Idle RSS on the national <code>indonesia.graph</code>
+        (1,621,222,585 B): <code>VmRSS 15,088 kB</code>, <code>RssAnon 6,720
+        kB</code>. After 200 sequential route requests: <code>VmRSS 26,500
+        kB</code>, <code>RssAnon 9,428 kB</code>. The same binary on
+        <code>java.graph</code> reads 15,048 kB idle and 26,472 kB after the same
+        load. <code>bin/nusa-serve -conc 1 -rate 0 -timeout 10s</code>, 30 seconds
+        of idle settle before the first sample; values are read from
         <code>/proc/&lt;pid&gt;/status</code>, not estimated.</p>
       <p class="section-note">Image budget for 1.0 is 32 MB target and 40 MB
         hard cap. The router image measured 36.8 MB on 15 November 2026: under
@@ -181,13 +186,13 @@
   <section class="sprint" id="sprint" aria-labelledby="sprint-title">
     <div class="wrap">
       <h2 id="sprint-title">Added in this sprint</h2>
-      <p class="section-note">Sprint of 18 to 19 November 2026. Every number below
-        comes from binaries built from the sprint branches and run on this
-        machine on 19 November 2026, not from the public demo: the pull
-        requests are still open, so
-        <code>demo.nusapeta.web.id</code> answers with the previous build and
-        returns 404 for the endpoints marked new. Measured on Linux
-        7.2.15-1-omarchy x86_64, <code>java.graph</code> built 12 November 2026 and <code>places.idx</code> built 19 November 2026.</p>
+      <p class="section-note">Sprint of 18 to 19 November 2026, merged into
+        <code>main</code> and released as <code>v0.2.1</code> on 20 November 2026.
+        Every number below was measured on this machine with the release binary
+        (commit <code>5962811</code>), not taken from the public demo: Linux
+        7.2.15-1-omarchy x86_64, the national <code>indonesia.graph</code> built
+        19 November 2026 (1,621,222,585 B, 54.9 M nodes, 112.3 M edges) and the
+        386,376,512 B <code>places.idx</code> built from the same PBF.</p>
       <div class="table-scroll">
         <table>
           <caption class="sr-only">Endpoints and limits added in the 18 to 19 November sprint</caption>
@@ -198,47 +203,47 @@
             <tr>
               <th scope="row"><code>/matrix</code> (new)</th>
               <td>One Dijkstra per source fills a whole row. 1 to 5 sources, 1 to 25 targets, at most 25 pairs, <code>max_minutes</code> positive, at most 180. Cells report <code>ok</code>, <code>too_far</code>, <code>snap_failed</code> or <code>no_route</code>.</td>
-              <td>Monas to three Jakarta targets: 10,784 m / 685.4 s, 3,975 m / 280.9 s, 6,292 m / 411.6 s. 45 ms, 133,244 expansions.</td>
+              <td>Monas to two Jakarta targets: 10,784 m / 685.4 s and 3,835 m / 315 s. 30 ms, 133,244 expansions. A third point, <code>-6.2,106.8166</code>, stays <code>no_route</code> in the matrix while <code>/route</code> answers it in 4,808 m: the matrix takes one snap and one Dijkstra per source, <code>/route</code> retries across candidate snaps.</td>
             </tr>
             <tr>
               <th scope="row"><code>/isochrone</code> (new)</th>
               <td>GeoJSON rings from a time-limited Dijkstra. <code>minutes</code> 1 to 60, <code>grid</code> 50 to 10,000 m, raised automatically past 40,000 cells, then simplified at 25 m.</td>
-              <td>Monas, 5 minutes: 21.06 km<sup>2</sup> in two rings, grid 250 m, 23,095 nodes, 11 ms.</td>
+              <td>Monas, 5 minutes: 21.21 km<sup>2</sup> in two rings, grid 250 m, 10 ms.</td>
             </tr>
             <tr>
               <th scope="row"><code>/nearest</code> (new)</th>
               <td>Snaps a coordinate to the closest road edge without running a route search. <code>k</code> returns up to 32 candidates with edge and node ids.</td>
-              <td>Monas: 311 m to the nearest edge, three candidates returned, 4 ms.</td>
+              <td>Monas: 311 m to the nearest edge, three candidates returned, 3 ms.</td>
             </tr>
             <tr>
               <th scope="row"><code>avoid</code> on <code>/route</code></th>
               <td><code>toll</code>, <code>ferry</code>, <code>unpaved</code>, <code>motorway</code>, comma or pipe separated. Edges are filtered during expansion, so snapping and expansion counts move too.</td>
-              <td>Monas to Depok: 30,839 m / 1,740.6 s free, 31,103 m / 2,260.8 s with <code>avoid=toll</code>. An unknown class returns 400.</td>
+              <td>Monas to Depok: 10,724 m / 680.9 s, identical with <code>avoid=toll</code> because the fastest path takes no toll road. An unknown class returns 400.</td>
             </tr>
             <tr>
               <th scope="row"><code>via</code> on <code>/route</code></th>
               <td>Up to five waypoints as <code>lat,lng</code> pairs joined by a pipe; legs are routed in order and joined into one point list.</td>
-              <td>Monas to Depok through one waypoint: 31,951 m / 1,956.8 s, two legs, 936 points.</td>
+              <td>Monas to Depok through <code>-6.2,106.8245</code>: 12,634 m / 898.4 s, two legs, 507 points. A waypoint at <code>-6.2,106.8166</code> fails with <code>too_far</code>: that pin sits in the dead pocket the snap retry cannot leave.</td>
             </tr>
             <tr>
               <th scope="row"><code>alt</code> on <code>/route</code></th>
               <td>Up to three extra routes, each accepted only when at least 20 % of its edge length differs from the routes already accepted.</td>
-              <td>None of the six Jakarta pairs tried here returned an alternative, and the response still carries the shortest route without an error.</td>
+              <td>Monas to Depok with <code>alt=3</code> returned no alternative, and the response still carries the shortest route without an error.</td>
             </tr>
             <tr>
               <th scope="row">Ferry stitching</th>
               <td>Cross-strait legs use measured OSM duration where a connector exists, otherwise a static table of ten crossings. <code>ferry_time_source</code> says which when the route crosses region files; a same-file crossing reports only <code>ferry_m</code> and <code>ferry_spans</code>.</td>
-              <td>Bakauheni to Merak: 29,784 m / 5,340.3 s, of which 27,596 m is ferry, <code>has_ferry</code> true.</td>
+              <td>Bakauheni to Merak: 29,331 m / 5,069.6 s, of which 27,056 m is ferry, <code>has_ferry</code> true.</td>
             </tr>
             <tr>
               <th scope="row"><code>/place/suggest</code> (new)</th>
               <td>Prefix autocomplete over the index, at least 3 characters after normalisation, 1 to 20 results, optional <code>lat</code>/<code>lon</code> bias. Shorter queries return 400.</td>
-              <td><code>q=monas</code> with a Monas bias returns five records: four named Monumen Nasional (a node and three ways) and Monas in Gorontalo Utara. <code>q=mo</code> returns 400 <code>invalid_request</code>.</td>
+              <td><code>q=monas</code> with a Monas bias returns five records in under a millisecond: four Monumen Nasional and Monas in Gorontalo Utara. <code>q=mo</code> returns 400 <code>invalid_request</code>.</td>
             </tr>
             <tr>
               <th scope="row"><code>/place/admin/reverse</code> (new)</th>
               <td>Deepest administrative polygon that contains the point, walked through <code>parent_id</code> instead of centroid distance. Sets <code>ambiguous</code> when several polygons at that level match.</td>
-              <td>Monas: Gambir, Jakarta Pusat, Daerah Khusus Ibukota Jakarta, <code>ambiguous</code> false. Needs an index rebuilt with the rings (386 MB against 142 MB); the current index answers 501 <code>no_admin_polygons</code>. Street reverse still never interpolates house numbers.</td>
+              <td>Monas: Gambir, Jakarta Pusat, Daerah Khusus Ibukota Jakarta, <code>ambiguous</code> false, in 7 ms on the 386,376,512 B national index (format v2, 9,360 administrative polygons). Street reverse still never interpolates house numbers.</td>
             </tr>
           </tbody>
         </table>
@@ -326,8 +331,8 @@ scripts/e2e.sh</code></pre>
           <code>422 too_far</code>.
         </li>
         <li>
-          <strong>Version 0.1.0.</strong> The data formats are versioned
-          (<code>.graph</code> v5, <code>.idx</code> v1); the HTTP API can change
+          <strong>Version 0.2.1.</strong> The data formats are versioned
+          (<code>.graph</code> v5, <code>.idx</code> v2); the HTTP API can change
           before 1.0.
         </li>
       </ol>
