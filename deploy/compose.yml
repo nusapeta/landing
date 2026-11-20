@@ -1,6 +1,6 @@
 services:
   landing:
-    image: ghcr.io/nusapeta/landing:0.2.1
+    image: ghcr.io/nusapeta/landing:0.3.0
     build:
       context: ..
       dockerfile: Dockerfile
