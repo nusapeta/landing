@@ -611,29 +611,6 @@ td code {
   font-weight: 600;
 }
 
-.sprint {
-  padding: 64px 0;
-  background: var(--paper);
-  border-top: 0;
-  border-bottom: 4px solid var(--ink);
-}
-
-.sprint .section-note {
-  max-width: 68ch;
-}
-
-.sprint table {
-  font-size: 0.86rem;
-}
-
-.sprint tbody th {
-  width: 22%;
-}
-
-.sprint tbody th code {
-  overflow-wrap: anywhere;
-}
-
 .try {
   padding: 64px 0;
   background: var(--ink);
@@ -981,7 +958,6 @@ td code {
   }
 
   .measure,
-  .sprint,
   .try,
   .limits {
     padding: 44px 0;
@@ -1049,27 +1025,6 @@ td code {
     margin-top: 6px;
     color: #33302a;
     font-size: 0.9375rem;
-  }
-
-  .sprint tbody td {
-    margin-top: 10px;
-  }
-
-  .sprint tbody td::before {
-    display: block;
-    margin-bottom: 2px;
-    font-size: 0.64rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #3a362e;
-  }
-
-  .sprint tbody td:nth-of-type(1)::before {
-    content: "Added";
-  }
-
-  .sprint tbody td:nth-of-type(2)::before {
-    content: "Measured here";
   }
 }
 
