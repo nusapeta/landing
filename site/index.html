@@ -101,19 +101,9 @@
   </section>
 
   <section class="measure artifacts" id="artifacts" aria-labelledby="artifacts-title">
-    <div class="wrap">
-      <div class="measure-intro">
-        <h2 id="artifacts-title">Artifacts</h2>
-        <p class="section-note">The national graph is built by <code>make graph
-          REGION=indonesia</code>, the island graphs by <code>make islands</code>, in
-          <code>nusapeta/route</code>. The national row was remeasured 19 November
-          2026 after the island rebuild at commit <code>0ccb2fc</code>; the island
-          rows are the 18 November 2026 build at commit <code>843c493</code>. Both
-          read with <code>stat -c %s</code> and <code>bin/nusa-graphinfo</code> on
-          Linux 7.2.15-1-omarchy x86_64. Sizes are exact file bytes. Reproduce with
-          <code>scripts/measure-artifacts.sh ../routeid</code> from this
-          checkout.</p>
-      </div>
+    <div class="wrap artifacts-grid">
+      <h2 id="artifacts-title">Artifacts</h2>
+      <p class="section-note artifacts-note">The national graph is built by <code>make graph REGION=indonesia</code>, the island graphs by <code>make islands</code>, in <code>nusapeta/route</code>. The national row was remeasured 19 November 2026 after the island rebuild at commit <code>0ccb2fc</code>; the island rows are the 18 November 2026 build at commit <code>843c493</code>. Both read with <code>stat -c %s</code> and <code>bin/nusa-graphinfo</code> on Linux 7.2.15-1-omarchy x86_64. Sizes are exact file bytes. Reproduce with <code>scripts/measure-artifacts.sh ../routeid</code> from this checkout.</p>
       <div class="table-scroll">
         <table>
           <caption class="sr-only">Graph artifacts produced by make graph and make islands</caption>
@@ -132,22 +122,9 @@
           </tbody>
         </table>
       </div>
-      <p class="section-note">Idle RSS on the national <code>indonesia.graph</code>
-        (1,621,222,585 B): <code>VmRSS 15,088 kB</code>, <code>RssAnon 6,720
-        kB</code>. After 200 sequential route requests: <code>VmRSS 26,500
-        kB</code>, <code>RssAnon 9,428 kB</code>. The same binary on
-        <code>java.graph</code> reads 15,048 kB idle and 26,472 kB after the same
-        load. <code>bin/nusa-serve -conc 1 -rate 0 -timeout 10s</code>, 30 seconds
-        of idle settle before the first sample; values are read from
-        <code>/proc/&lt;pid&gt;/status</code>, not estimated.</p>
-      <p class="section-note">Image budget for 1.0 is 32 MB target and 40 MB
-        hard cap. The router image measured 36.8 MB on 15 November 2026: under
-        the cap, above the target.</p>
-      <p class="section-note">Graph and index data: ODbL 1.0,
-        <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.
-        Where a build renumbers features, <code>osm_type</code> plus
-        <code>osm_id</code> is the identity to use; <code>place_id</code> is not
-        treated as a stable external key here.</p>
+      <p class="section-note">Idle RSS on the national <code>indonesia.graph</code> (1,621,222,585 B): <code>VmRSS 15,088 kB</code>, <code>RssAnon 6,720 kB</code>. After 200 sequential route requests: <code>VmRSS 26,500 kB</code>, <code>RssAnon 9,428 kB</code>. The same binary on <code>java.graph</code> reads 15,048 kB idle and 26,472 kB after the same load. <code>bin/nusa-serve -conc 1 -rate 0 -timeout 10s</code>, 30 seconds of idle settle before the first sample; values are read from <code>/proc/&lt;pid&gt;/status</code>, not estimated.</p>
+      <p class="section-note">Image budget for 1.0 is 32 MB target and 40 MB hard cap. The router image measured 36.8 MB on 15 November 2026: under the cap, above the target.</p>
+      <p class="section-note">Graph and index data: ODbL 1.0, <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>. Where a build renumbers features, <code>osm_type</code> plus <code>osm_id</code> is the identity to use; <code>place_id</code> is not treated as a stable external key here.</p>
     </div>
   </section>
 
