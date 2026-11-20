@@ -250,14 +250,21 @@ Tidak ada bagian testimoni, logo pelanggan, pricing, FAQ template, atau
 | Angka di halaman basi setelah rilis mesin | klaim salah | angka menyebut tanggal ukur; perbarui bersama rilis mesin |
 | Cache HTML agresif di Cloudflare | perubahan tidak terlihat | `max-age=300` dan purge manual saat rilis |
 
-## 12. Bagian sprint 18-19 November 2026
+## 12. Bagian sprint 18-19 November 2026 (dihapus 20 November 2026)
 
 `#sprint` ditambahkan 19 November 2026, di antara bagian mesin dan bagian coba.
 Isinya tabel sembilan baris: `/matrix`, `/isochrone`, `/nearest`, `avoid`, `via`,
 `alt` pada `/route`, penjahitan ferry, `/place/suggest`, dan
 `/place/admin/reverse`.
 
-Aturan yang dipakai:
+Bagian ini **dihapus** pada 20 November 2026 bersama tautan nav `Changes`.
+Alasannya: sorotan "apa yang baru di sprint ini" hanya berlaku beberapa hari di
+halaman pemasaran yang tidak punya arsip rilis; setelah v0.2.1 stabil, tabel itu
+jadi beban perawatan karena setiap angka ikut basi tiap rilis mesin. Rincian
+endpoint sudah ada di `docs/API.md` masing-masing repo, dan angka ukur yang dulu
+tampil di halaman disimpan di `README.md` bagian "Endpoint measurements".
+
+Aturan yang dipakai saat bagian itu masih ada, dicatat sebagai riwayat:
 
 - Setiap angka diukur dari binary yang dibangun dari branch sprint, bukan
   dikutip dari teks PR. Tanggal ukur, versi kernel, dan tanggal artefak

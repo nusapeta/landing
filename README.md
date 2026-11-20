@@ -128,22 +128,19 @@ Java, Sumatra, and Nusa Tenggara have v5 graphs with counts listed on the
 page. Maluku on this machine is a stale v4 file that the current extractor
 rejects. Kalimantan, Sulawesi, and Papua have no graph file here, so the page
 shows them as unbuilt instead of inventing sizes. `python3 scripts/check.py`
-passes with the new section and anchor.
+passes.
 
-## Sprint section, checked 2026-11-20
+## Endpoint measurements, checked 2026-11-20
 
-The `#sprint` section lists the endpoints added by the 18 to 19 November
-branch work, now merged and released as v0.2.1. Every number in it was
-re-measured with the release binary against the national graph and the v2
-index, not copied from the PR text.
+These are the measurements taken when the 18 to 19 November branch work merged
+and shipped as v0.2.1. Every number was re-measured with the release binary
+against the national graph and the v2 index, not copied from the PR text. The
+page no longer carries a per-sprint section, so this table is the record.
 
 | Check | Result |
 |---|---|
 | `scripts/check.py` | 2 pages, no broken anchors, no missing assets, no em or en dash |
-| Section anchor | `#sprint` resolves from the nav item `Changes` |
-| Rows | 9, one per endpoint or parameter group |
 | Layout at 320, 375, 768, 1024, 1440 px | no horizontal overflow; nav wraps at 560 px and below |
-| Mobile table | `thead` visually hidden, each cell labelled Added / Measured here |
 | Public demo, new paths | `/matrix`, `/isochrone`, `/nearest` return 200 on the 0.2.0 demo build |
 | `/matrix`, Monas to two targets | 30 ms, 133,244 expansions, 10,784 m and 3,835 m; a third pin reports `no_route` where `/route` answers 4,808 m |
 | `/isochrone`, Monas 5 minutes | 21.21 km², 2 features, grid 250 m, 10 ms |
