@@ -419,6 +419,62 @@ pre {
   margin-top: 0;
 }
 
+.artifacts-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.78fr);
+  gap: 0 56px;
+  align-items: start;
+}
+
+.artifacts-grid h2 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.artifacts-note {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: 0;
+}
+
+.artifacts-grid .artifacts-note {
+  max-width: none;
+}
+
+.artifacts-grid .table-scroll {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 24px;
+}
+
+/* The heading is short and the note is long, so below the two-column
+   breakpoint the note simply stacks under the heading. */
+@media (max-width: 900px) {
+  .artifacts-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .artifacts-grid h2,
+  .artifacts-note,
+  .artifacts-grid .table-scroll {
+    grid-column: 1;
+  }
+
+  .artifacts-grid h2 {
+    grid-row: 1;
+  }
+
+  .artifacts-note {
+    grid-row: 2;
+    margin-top: 12px;
+  }
+
+  .artifacts-grid .table-scroll {
+    grid-row: 3;
+  }
+}
+
 .section-note {
   margin-top: 12px;
   color: #3a362e;
@@ -429,6 +485,7 @@ pre {
 .table-scroll {
   margin-top: 24px;
   overflow-x: auto;
+  max-width: 100%;
 }
 
 table {
@@ -892,6 +949,21 @@ td code {
   .footer-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
+  }
+}
+
+/* Between 561 and 659 px the widest table (Artifacts, six columns) is a few
+   dozen pixels wider than the wrap and the block layout at 560 px has not
+   started yet, so it used to clip without any sign that it could scroll.
+   Tightening the cell padding and one font step makes every table fit at these
+   widths, which beats both a scroll hint and dropping the column headers.
+   Measured: 90 px over at 561 px, 51 px at 600, 31 px at 620, 11 px at 640,
+   0 px from 660 up. */
+@media (min-width: 561px) and (max-width: 659px) {
+  th,
+  td {
+    padding: 8px 4px;
+    font-size: 0.82rem;
   }
 }
 
